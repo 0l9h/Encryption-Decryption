@@ -7,8 +7,11 @@ namespace Encryption_Decryption
         static void Main(string[] args)
         {
             Cypher msg = new Cypher();
-            
-            Console.WriteLine($"Encrypted message: {msg.Encrypt("Hello world")}");
+
+            string encrypted = msg.Encrypt("Hello world");
+            Console.WriteLine($"Encrypted message: {encrypted}");
+            Console.WriteLine($"Decrypted message: {msg.Decrypt(encrypted)}");
+
         }
     }
 }
