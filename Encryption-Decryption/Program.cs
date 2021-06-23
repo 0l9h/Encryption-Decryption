@@ -6,11 +6,12 @@ namespace Encryption_Decryption
     {
         static void Main(string[] args)
         {
-            Cypher msg = new Cypher();
 
-            string encrypted = msg.Encrypt("Hello world");
+            Cypher msg = new Cypher("Hello world");
+
+            string encrypted = msg.Encrypt();
             Console.WriteLine($"Encrypted message: {encrypted}");
-            Console.WriteLine($"Decrypted message: {msg.Decrypt(encrypted)}");
+            Console.WriteLine($"Decrypted message: {msg.Decrypt()}");
 
         }
     }

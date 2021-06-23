@@ -6,53 +6,61 @@ namespace Encryption_Decryption
 {
     class Cypher : IEncryptAndDecrypt
     {
-        private const int rows = 4;
-        public string Decrypt(string EncryptedMessage)
+        private readonly int _rows;
+        private string _message;
+        private string _encrypted;
+        public Cypher(string message)
         {
-            int cols = (int)Math.Ceiling((double)EncryptedMessage.Length / rows);
+            _message = message;
+            Random r = new Random();
+            _rows = r.Next(1, _message.Length / 2);
+        }
 
-            char[,] initArr = new char[rows, cols];
+        public string Decrypt()
+        {
+            int cols = (int)Math.Ceiling((double)_encrypted.Length / _rows);
+
+            char[,] initArr = new char[_rows, cols];
             string resStr = new string("");
 
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i < _rows; i++)
             {
                 for (int j = 0; j < cols; j++)
                 {
-                    if (i * cols + j >= EncryptedMessage.Length) break;
-                    initArr[i, j] = EncryptedMessage[i * cols + j];
+                    if (i * cols + j >= _encrypted.Length) break;
+                    initArr[i, j] = _encrypted[i * cols + j];
                 }
             }   //  Creating 2D-array from given string
 
             for (int i = 0; i < cols; i++)
-                for (int j = 0; j < rows; j++)
+                for (int j = 0; j < _rows; j++)
                     resStr += initArr[j, i];
             //  Transposing 2D-array and writing it into a string
 
             return resStr;
         }
 
-        public string Encrypt(string message)
+        public string Encrypt()
         {
-            int cols = (int)Math.Ceiling((double)message.Length / rows);
+            int cols = (int)Math.Ceiling((double)_message.Length / _rows);
 
-            char[,] initArr = new char[cols, rows];
-            string resStr = new string("");
+            char[,] initArr = new char[cols, _rows];
 
             for (int i = 0; i < cols; i++)
             {
-                for (int j = 0; j < rows; j++)
+                for (int j = 0; j < _rows; j++)
                 {
-                    if (i * rows + j >= message.Length) break;
-                    initArr[i, j] = message[i * rows + j];
+                    if (i * _rows + j >= _message.Length) break;
+                    initArr[i, j] = _message[i * _rows + j];
                 }
             }   //  Creating 2D-array from given string
 
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i < _rows; i++)
                 for (int j = 0; j < cols; j++)
-                    resStr += initArr[j, i];   
+                    _encrypted += initArr[j, i];   
                 //  Transposing 2D-array and writing it into a string
 
-            return resStr;
+            return _encrypted;
         }
     }
 }
