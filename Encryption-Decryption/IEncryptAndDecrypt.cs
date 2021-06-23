@@ -6,7 +6,7 @@ namespace Encryption_Decryption
 {
     interface IEncryptAndDecrypt
     {
-        string Encrypt(string message);
-        string Decrypt(string EncryptedMessage);
+        string Encrypt();
+        string Decrypt();
     }
 }
