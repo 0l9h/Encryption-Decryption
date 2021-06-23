@@ -6,7 +6,7 @@ namespace Encryption_Decryption
 {
     class Cypher : IEncryptAndDecrypt
     {
-        private const int dimension = 4;
+        private const int rows = 4;
         public string Decrypt(string EncryptedMessage)
         {
             throw new NotImplementedException();
@@ -14,29 +14,26 @@ namespace Encryption_Decryption
 
         public string Encrypt(string message)
         {
-            int cols = (int)Math.Ceiling((double)message.Length / dimension);
+            int cols = (int)Math.Ceiling((double)message.Length / rows);
 
-            char[,] arr = new char[dimension, cols];
+            char[,] initArr = new char[cols, rows];
+            string resStr = new string("");
 
-            string res = new string("");
-            Console.WriteLine(arr.GetLength(0));
-
-            for (int i = 0; i < dimension; i++)
+            for (int i = 0; i < cols; i++)
             {
-                for (int j = 0; j < arr.GetLength(1); j++)
+                for (int j = 0; j < rows; j++)
                 {
-                    if      (i == 0 && j != 0)            arr[i, j] = message[j*dimension];
-                    else if (i != 0 && j == 0)            arr[i, j] = message[i];
-                    else if (i*dimension+j < arr.Length)  arr[j, i] = message[i * dimension+j];
-                    else                                  arr[i, j] = message[i+j*i+1];
-                } 
-            }   //  Writing message in 2D-array form (by columns)
+                    if (i * rows + j >= message.Length) break;
+                    initArr[i, j] = message[i * rows + j];
+                }
+            }   //  Creating 2D-array from given string
 
-            for (int i = 0; i < dimension; i++)
-                for (int j = 0; j < arr.GetLength(1); j++)
-                    res += arr[i, j];
-                //  Writing 2D-array into encrypted message (by rows)
-            return res;
+            for (int i = 0; i < rows; i++)
+                for (int j = 0; j < cols; j++)
+                    resStr += initArr[j, i];   
+                //  Transposing 2D-array and writing it into a string
+
+            return resStr;
         }
     }
 }
