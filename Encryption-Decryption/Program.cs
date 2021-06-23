@@ -6,7 +6,9 @@ namespace Encryption_Decryption
     {
         static void Main(string[] args)
         {
-            Cypher msg = new Cypher("Hello world. How are you guys? Cause i'm great!");
+            Console.WriteLine("Enter your message:");
+            string message = Console.ReadLine();
+            Cypher msg = new Cypher(message);
             string encrypted = msg.Encrypt();
             Console.WriteLine($"Encrypted message: {encrypted}");
             Console.WriteLine($"Decrypted message: {msg.Decrypt()}");
